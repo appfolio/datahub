@@ -1,0 +1,18 @@
+namespace com.linkedin.assertion
+
+import com.linkedin.common.Urn
+
+/**
+* Attributes that are applicable to generic Assertions
+**/
+record GenericAssertionInfo {
+    /**
+    * The entity targeted by this assertion.
+    */
+    @Relationship = {
+      "name": "Asserts",
+      "entityTypes": [ "dataFlow", "dataJob" ]
+    }
+    entityUrn: Urn
+
+}
