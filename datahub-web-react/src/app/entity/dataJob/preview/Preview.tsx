@@ -12,6 +12,7 @@ import {
     GlobalTags,
     Health,
     Owner,
+    Health,
     SearchInsight,
 } from '../../../../types.generated';
 import DefaultPreviewCard from '../../../preview/DefaultPreviewCard';

@@ -111,6 +111,7 @@ import com.linkedin.datahub.graphql.resolvers.MeResolver;
 import com.linkedin.datahub.graphql.resolvers.assertion.AssertionRunEventResolver;
 import com.linkedin.datahub.graphql.resolvers.assertion.DeleteAssertionResolver;
 import com.linkedin.datahub.graphql.resolvers.assertion.EntityAssertionsResolver;
+import com.linkedin.datahub.graphql.resolvers.assertion.EntityHealthResolver;
 import com.linkedin.datahub.graphql.resolvers.auth.*;
 import com.linkedin.datahub.graphql.resolvers.browse.BrowsePathsResolver;
 import com.linkedin.datahub.graphql.resolvers.browse.BrowseResolver;
@@ -2078,84 +2079,43 @@ public class GmsGraphQLEngine {
     builder.scalar(GraphQLLong);
   }
 
-  /**
-   * Configures resolvers responsible for resolving the {@link
-   * com.linkedin.datahub.graphql.generated.DataJob} type.
-   */
-  private void configureDataJobResolvers(final RuntimeWiring.Builder builder) {
-    builder
-        .type(
-            "DataJob",
-            typeWiring ->
-                typeWiring
-                    .dataFetcher(
-                        "relationships", new EntityRelationshipsResultResolver(graphClient))
-                    .dataFetcher("browsePaths", new EntityBrowsePathsResolver(this.dataJobType))
-                    .dataFetcher(
-                        "lineage",
-                        new EntityLineageResultResolver(
-                            siblingGraphService,
-                            restrictedService,
-                            this.authorizationConfiguration))
-                    .dataFetcher(
-                        "aspects", new WeaklyTypedAspectsResolver(entityClient, entityRegistry))
-                    .dataFetcher(
-                        "dataFlow",
-                        new LoadableTypeResolver<>(
-                            dataFlowType,
-                            (env) -> ((DataJob) env.getSource()).getDataFlow().getUrn()))
-                    .dataFetcher(
-                        "dataPlatformInstance",
-                        new LoadableTypeResolver<>(
-                            dataPlatformInstanceType,
-                            (env) -> {
-                              final DataJob dataJob = env.getSource();
-                              return dataJob.getDataPlatformInstance() != null
-                                  ? dataJob.getDataPlatformInstance().getUrn()
-                                  : null;
-                            }))
-                    .dataFetcher("runs", new DataJobRunsResolver(entityClient))
-                    .dataFetcher("privileges", new EntityPrivilegesResolver(entityClient))
-                    .dataFetcher("exists", new EntityExistsResolver(entityService))
-                    .dataFetcher(
-                        "health",
-                        new EntityHealthResolver(
-                            entityClient,
-                            graphClient,
-                            timeseriesAspectService,
-                            new EntityHealthResolver.Config(false, true))))
-        .type(
-            "DataJobInputOutput",
-            typeWiring ->
-                typeWiring
-                    .dataFetcher(
-                        "inputDatasets",
-                        new LoadableTypeBatchResolver<>(
-                            datasetType,
-                            (env) ->
-                                ((DataJobInputOutput) env.getSource())
-                                    .getInputDatasets().stream()
-                                        .map(datasetType.getKeyProvider())
-                                        .collect(Collectors.toList())))
-                    .dataFetcher(
-                        "outputDatasets",
-                        new LoadableTypeBatchResolver<>(
-                            datasetType,
-                            (env) ->
-                                ((DataJobInputOutput) env.getSource())
-                                    .getOutputDatasets().stream()
-                                        .map(datasetType.getKeyProvider())
-                                        .collect(Collectors.toList())))
-                    .dataFetcher(
-                        "inputDatajobs",
-                        new LoadableTypeBatchResolver<>(
-                            dataJobType,
-                            (env) ->
-                                ((DataJobInputOutput) env.getSource())
-                                    .getInputDatajobs().stream()
-                                        .map(DataJob::getUrn)
-                                        .collect(Collectors.toList()))));
-  }
+    /**
+     * Configures resolvers responsible for resolving the {@link com.linkedin.datahub.graphql.generated.DataJob} type.
+     */
+    private void configureDataJobResolvers(final RuntimeWiring.Builder builder) {
+        builder
+            .type("DataJob", typeWiring -> typeWiring
+                .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient))
+                .dataFetcher("browsePaths", new EntityBrowsePathsResolver(this.dataJobType))
+                .dataFetcher("lineage", new EntityLineageResultResolver(siblingGraphService))
+                .dataFetcher("dataFlow", new LoadableTypeResolver<>(dataFlowType,
+                    (env) -> ((DataJob) env.getSource()).getDataFlow().getUrn()))
+                .dataFetcher("dataPlatformInstance",
+                    new LoadableTypeResolver<>(dataPlatformInstanceType,
+                        (env) -> {
+                            final DataJob dataJob = env.getSource();
+                            return dataJob.getDataPlatformInstance() != null ? dataJob.getDataPlatformInstance().getUrn() : null;
+                        })
+                )
+                .dataFetcher("runs", new DataJobRunsResolver(entityClient))
+                .dataFetcher("privileges", new EntityPrivilegesResolver(entityClient))
+                .dataFetcher("exists", new EntityExistsResolver(entityService))
+            )
+            .type("DataJobInputOutput", typeWiring -> typeWiring
+                .dataFetcher("inputDatasets", new LoadableTypeBatchResolver<>(datasetType,
+                    (env) -> ((DataJobInputOutput) env.getSource()).getInputDatasets().stream()
+                        .map(datasetType.getKeyProvider())
+                        .collect(Collectors.toList())))
+                .dataFetcher("outputDatasets", new LoadableTypeBatchResolver<>(datasetType,
+                    (env) -> ((DataJobInputOutput) env.getSource()).getOutputDatasets().stream()
+                        .map(datasetType.getKeyProvider())
+                        .collect(Collectors.toList())))
+                .dataFetcher("inputDatajobs", new LoadableTypeBatchResolver<>(dataJobType,
+                    (env) -> ((DataJobInputOutput) env.getSource()).getInputDatajobs().stream()
+                        .map(DataJob::getUrn)
+                        .collect(Collectors.toList())))
+            );
+    }
 
   /**
    * Configures resolvers responsible for resolving the {@link
@@ -2168,17 +2128,9 @@ public class GmsGraphQLEngine {
             typeWiring
                 .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient))
                 .dataFetcher("browsePaths", new EntityBrowsePathsResolver(this.dataFlowType))
-                .dataFetcher(
-                    "lineage",
-                    new EntityLineageResultResolver(
-                        siblingGraphService, restrictedService, this.authorizationConfiguration))
-                .dataFetcher(
-                    "aspects", new WeaklyTypedAspectsResolver(entityClient, entityRegistry))
-                .dataFetcher(
-                    "platform",
-                    new LoadableTypeResolver<>(
-                        dataPlatformType,
-                        (env) -> ((DataFlow) env.getSource()).getPlatform().getUrn()))
+                .dataFetcher("lineage", new EntityLineageResultResolver(siblingGraphService))
+                .dataFetcher("platform", new LoadableTypeResolver<>(dataPlatformType,
+                    (env) -> ((DataFlow) env.getSource()).getPlatform().getUrn()))
                 .dataFetcher("exists", new EntityExistsResolver(entityService))
                 .dataFetcher(
                     "dataPlatformInstance",

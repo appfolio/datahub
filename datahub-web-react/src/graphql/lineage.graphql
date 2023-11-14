@@ -94,9 +94,6 @@ fragment lineageNodeProperties on EntityWithRelationships {
         status {
             removed
         }
-        health {
-            ...entityHealth
-        }
     }
     ... on Dashboard {
         urn

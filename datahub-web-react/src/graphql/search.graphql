@@ -661,9 +661,6 @@ fragment searchResultFields on Entity {
                 }
             }
         }
-        health {
-            ...entityHealth
-        }
     }
     ... on GlossaryTerm {
         name
