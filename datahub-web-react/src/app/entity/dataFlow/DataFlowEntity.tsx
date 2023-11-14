@@ -48,7 +48,7 @@ export class DataFlowEntity implements Entity<DataFlow> {
 
     isBrowseEnabled = () => true;
 
-    isLineageEnabled = () => false;
+    isLineageEnabled = () => true;
 
     getAutoCompleteFieldName = () => 'name';
 
@@ -162,6 +162,18 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 paths={(result as any).paths}
             />
         );
+    };
+
+    getLineageVizConfig = (entity: DataFlow) => {
+        return {
+            urn: entity?.urn,
+            name: this.displayName(entity),
+            expandedName: entity?.flowId,
+            type: EntityType.DataFlow,
+            icon: entity?.platform?.properties?.logoUrl || undefined,
+            platform: entity?.platform,
+            health: entity?.health || undefined,
+        };
     };
 
     displayName = (data: DataFlow) => {
