@@ -54,6 +54,12 @@ fragment lineageNodeProperties on EntityWithRelationships {
                 }
             }
         }
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
     ... on DataFlow {
         orchestrator
@@ -85,6 +91,12 @@ fragment lineageNodeProperties on EntityWithRelationships {
         ...entityDataProduct
         status {
             removed
+        }
+        health {
+            type
+            status
+            message
+            causes
         }
     }
     ... on Dashboard {

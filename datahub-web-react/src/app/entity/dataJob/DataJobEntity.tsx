@@ -155,6 +155,7 @@ export class DataJobEntity implements Entity<DataJob> {
                 domain={data.domain?.domain}
                 dataProduct={getDataProduct(genericProperties?.dataProduct)}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -182,6 +183,7 @@ export class DataJobEntity implements Entity<DataJob> {
                 }
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
     };
@@ -212,6 +214,7 @@ export class DataJobEntity implements Entity<DataJob> {
             type: EntityType.DataJob,
             icon: entity?.dataFlow?.platform?.properties?.logoUrl || undefined,
             platform: entity?.dataFlow?.platform,
+            health: entity?.health || undefined,
         };
     };
 

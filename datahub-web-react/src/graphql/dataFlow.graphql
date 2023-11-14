@@ -50,6 +50,15 @@ fragment dataFlowFields on DataFlow {
     browsePathV2 {
         ...browsePathV2Fields
     }
+    health {
+        type
+        status
+        message
+        causes
+    }
+    assertions(start: 0, count: 1) {
+        total
+    }
 }
 
 query getDataFlow($urn: String!) {
@@ -98,6 +107,12 @@ query getDataFlow($urn: String!) {
                         deprecation {
                             ...deprecationFields
                         }
+                        health {
+                            type
+                            status
+                            message
+                            causes
+                        }
                     }
                 }
             }
@@ -110,3 +125,28 @@ mutation updateDataFlow($urn: String!, $input: DataFlowUpdateInput!) {
         urn
     }
 }
+
+# fragment dataFlowAssertionsQuery on DataFlow {
+#     assertions(start: 0, count: 1000) {
+#         start
+#         count
+#         total
+#         assertions {
+#             ...assertionDetails
+#             runEvents(status: COMPLETE, limit: 1) {
+#                 total
+#                 failed
+#                 succeeded
+#                 runEvents {
+#                     ...assertionRunEventDetails
+#                 }
+#             }
+#         }
+#     }
+# }
+
+# query getDataFlowAssertions($urn: String!) {
+#     dataFlow(urn: $urn) {
+#         ...dataFlowAssertionsQuery
+#     }
+# }

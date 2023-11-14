@@ -133,6 +133,7 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 domain={data.domain?.domain}
                 dataProduct={getDataProduct(genericProperties?.dataProduct)}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -160,6 +161,7 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 deprecation={data.deprecation}
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
     };
