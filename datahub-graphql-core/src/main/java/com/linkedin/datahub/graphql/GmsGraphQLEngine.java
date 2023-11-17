@@ -747,6 +747,7 @@ public class GmsGraphQLEngine {
         builder
             .type("Container", typeWiring -> typeWiring
                 .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient))
+                .dataFetcher("lineage", new EntityLineageResultResolver(siblingGraphService))
                 .dataFetcher("entities", new ContainerEntitiesResolver(entityClient))
                 .dataFetcher("exists", new EntityExistsResolver(entityService))
                 .dataFetcher("platform",

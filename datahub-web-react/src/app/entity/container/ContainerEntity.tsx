@@ -53,7 +53,7 @@ export class ContainerEntity implements Entity<Container> {
 
     isBrowseEnabled = () => false;
 
-    isLineageEnabled = () => false;
+    isLineageEnabled = () => true;
 
     getAutoCompleteFieldName = () => 'name';
 
@@ -66,6 +66,7 @@ export class ContainerEntity implements Entity<Container> {
     renderProfile = (urn: string) => (
         <EntityProfile
             urn={urn}
+            key={urn}
             entityType={EntityType.Container}
             useEntityQuery={useGetContainerQuery}
             useUpdateQuery={undefined}
@@ -158,6 +159,17 @@ export class ContainerEntity implements Entity<Container> {
                 paths={(result as any).paths}
             />
         );
+    };
+
+    getLineageVizConfig = (entity: Container) => {
+        return {
+            urn: entity?.urn,
+            name: this.displayName(entity),
+            expandedName: entity?.properties?.name,
+            type: EntityType.Container,
+            icon: entity?.platform?.properties?.logoUrl || undefined,
+            platform: entity?.platform,
+        };
     };
 
     displayName = (data: Container) => {

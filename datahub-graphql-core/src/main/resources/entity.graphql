@@ -2341,7 +2341,7 @@ enum FabricType {
 """
 A container of other Metadata Entities
 """
-type Container implements Entity {
+type Container implements EntityWithRelationships & Entity {
     """
     The primary key of the container
     """
@@ -2431,6 +2431,11 @@ type Container implements Entity {
     Edges extending from this entity
     """
     relationships(input: RelationshipsInput!): EntityRelationshipsResult
+
+    """
+    Edges extending from this entity grouped by direction in the lineage graph
+    """
+    lineage(input: LineageInput!): EntityLineageResult
 
     """
     Status metadata of the container
