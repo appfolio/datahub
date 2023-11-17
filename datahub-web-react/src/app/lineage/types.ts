@@ -1,6 +1,7 @@
 import { FullLineageResultsFragment } from '../../graphql/lineage.generated';
 import {
     Chart,
+    Container,
     DataFlow,
     Dashboard,
     DataJob,
@@ -140,6 +141,10 @@ export type EntityAndType =
     | {
           type: EntityType.Dataset;
           entity: Dataset;
+      }
+    | {
+          type: EntityType.Container;
+          entity: Container;
       }
     | {
           type: EntityType.Chart;

@@ -1,6 +1,19 @@
 fragment lineageNodeProperties on EntityWithRelationships {
     urn
     type
+    ... on Container {
+        urn
+        type
+        platform {
+            ...platformFields
+        }
+        ownership {
+            ...ownershipFields
+        }
+        status {
+            removed
+        }
+    }
     ... on DataJob {
         urn
         type
