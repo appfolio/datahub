@@ -834,6 +834,8 @@ public class GmsGraphQLEngine {
             typeWiring
                 .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient))
                 .dataFetcher("lineage", new EntityLineageResultResolver(siblingGraphService))
+                .dataFetcher("health", new EntityHealthResolver(graphClient, timeseriesAspectService))
+                .dataFetcher("assertions", new EntityAssertionsResolver(entityClient, graphClient))
                 .dataFetcher("entities", new ContainerEntitiesResolver(entityClient))
                 .dataFetcher(
                     "aspects", new WeaklyTypedAspectsResolver(entityClient, entityRegistry))
