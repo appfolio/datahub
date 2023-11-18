@@ -733,6 +733,12 @@ fragment searchResultFields on Entity {
         parentContainers {
             ...parentContainersFields
         }
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
     ... on MLFeatureTable {
         name

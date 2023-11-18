@@ -2438,6 +2438,16 @@ type Container implements EntityWithRelationships & Entity {
     lineage(input: LineageInput!): EntityLineageResult
 
     """
+    Assertions associated with the DataJob
+    """
+    assertions(start: Int, count: Int): EntityAssertionsResult
+
+    """
+    Experimental! The resolved health statuses of the Container
+    """
+    health: [Health!]
+
+    """
     Status metadata of the container
     """
     status: Status

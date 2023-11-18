@@ -11,7 +11,7 @@ record GenericAssertionInfo {
     */
     @Relationship = {
       "name": "Asserts",
-      "entityTypes": [ "dataFlow", "dataJob" ]
+      "entityTypes": [ "container", "dataFlow", "dataJob" ]
     }
     entityUrn: Urn
 

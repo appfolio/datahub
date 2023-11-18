@@ -130,6 +130,7 @@ export class ContainerEntity implements Entity<Container> {
                 dataProduct={getDataProduct(genericProperties?.dataProduct)}
                 tags={data.tags}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -157,6 +158,7 @@ export class ContainerEntity implements Entity<Container> {
                 glossaryTerms={data.glossaryTerms}
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
     };
@@ -169,6 +171,7 @@ export class ContainerEntity implements Entity<Container> {
             type: EntityType.Container,
             icon: entity?.platform?.properties?.logoUrl || undefined,
             platform: entity?.platform,
+            health: entity?.health || undefined,
         };
     };
 

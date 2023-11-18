@@ -44,6 +44,15 @@ query getContainer($urn: String!) {
         container {
             ...entityContainer
         }
+        health {
+            type
+            status
+            message
+            causes
+        }
+        assertions(start: 0, count: 1) {
+            total
+        }
         parentContainers {
             ...parentContainersFields
         }

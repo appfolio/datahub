@@ -4,6 +4,10 @@ fragment lineageNodeProperties on EntityWithRelationships {
     ... on Container {
         urn
         type
+        properties {
+            name
+            description
+        }
         platform {
             ...platformFields
         }
@@ -12,6 +16,12 @@ fragment lineageNodeProperties on EntityWithRelationships {
         }
         status {
             removed
+        }
+        health {
+            type
+            status
+            message
+            causes
         }
     }
     ... on DataJob {
