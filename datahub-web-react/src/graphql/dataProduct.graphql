@@ -23,6 +23,15 @@ fragment dataProductFields on DataProduct {
             value
         }
     }
+    health {
+        type
+        status
+        message
+        causes
+    }
+    assertions(start: 0, count: 1) {
+        total
+    }
     institutionalMemory {
         ...institutionalMemoryFields
     }

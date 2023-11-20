@@ -2469,16 +2469,14 @@ public class GmsGraphQLEngine {
                 .dataFetcher("isAssignedToMe", new IsFormAssignedToMeResolver(groupService)));
   }
 
-  private void configureDataProductResolvers(final RuntimeWiring.Builder builder) {
-    builder.type(
-        "DataProduct",
-        typeWiring ->
-            typeWiring
-                .dataFetcher("entities", new ListDataProductAssetsResolver(this.entityClient))
-                .dataFetcher(
-                    "aspects", new WeaklyTypedAspectsResolver(entityClient, entityRegistry))
-                .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient)));
-  }
+    private void configureDataProductResolvers(final RuntimeWiring.Builder builder) {
+        builder.type("DataProduct", typeWiring -> typeWiring
+            .dataFetcher("entities", new ListDataProductAssetsResolver(this.entityClient))
+            .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient))
+            .dataFetcher("health", new EntityHealthResolver(graphClient, timeseriesAspectService))
+            .dataFetcher("assertions", new EntityAssertionsResolver(entityClient, graphClient))
+        );
+    }
 
   private void configureAssertionResolvers(final RuntimeWiring.Builder builder) {
     builder.type(

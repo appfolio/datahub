@@ -827,6 +827,12 @@ fragment searchResultFields on Entity {
     }
     ... on DataProduct {
         ...dataProductSearchFields
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
 }
 

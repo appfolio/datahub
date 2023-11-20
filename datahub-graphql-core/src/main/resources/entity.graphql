@@ -11516,6 +11516,16 @@ type DataProduct implements Entity {
     entities(input: SearchAcrossEntitiesInput): SearchResults
 
     """
+    Assertions associated with the Data Porduct
+    """
+    assertions(start: Int, count: Int): EntityAssertionsResult
+
+    """
+    Experimental! The resolved health statuses of the Data Product
+    """
+    health: [Health!]
+
+    """
     The structured glossary terms associated with the Data Product
     """
     glossaryTerms: GlossaryTerms
