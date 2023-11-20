@@ -48,7 +48,7 @@ record ContainerProperties includes CustomProperties, ExternalReference {
   @Relationship = {
     "/*/destinationUrn": {
       "name": "DownstreamOf",
-      "entityTypes": [ "container", "dataFlow", "dataJob" ],
+      "entityTypes": [ "container", "dataFlow", "dataJob", "dataset" ],
       "isLineage": true,
       "createdOn": "inputEdges/*/created/time"
       "createdActor": "inputEdges/*/created/actor"

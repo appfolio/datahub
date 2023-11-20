@@ -35,12 +35,12 @@ record DataFlowInfo includes CustomProperties, ExternalReference {
   description: optional string
 
   /**
-   * Upstream flow(s) this flow is dependant on
+   * Upstream entities this flow is dependant on
    */
   @Relationship = {
     "/*/destinationUrn": {
       "name": "DownstreamOf",
-      "entityTypes": [ "dataFlow" ],
+      "entityTypes": [ "container", "dataFlow", "dataset" ],
       "isLineage": true,
       "createdOn": "inputEdges/*/created/time"
       "createdActor": "inputEdges/*/created/actor"
