@@ -1717,6 +1717,8 @@ public class GmsGraphQLEngine {
         builder.type("DataProduct", typeWiring -> typeWiring
             .dataFetcher("entities", new ListDataProductAssetsResolver(this.entityClient))
             .dataFetcher("relationships", new EntityRelationshipsResultResolver(graphClient))
+            .dataFetcher("health", new EntityHealthResolver(graphClient, timeseriesAspectService))
+            .dataFetcher("assertions", new EntityAssertionsResolver(entityClient, graphClient))
         );
     }
 
