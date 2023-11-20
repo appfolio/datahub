@@ -1491,13 +1491,13 @@
         "type" : "array",
         "items" : "com.linkedin.common.Edge"
       },
-      "doc" : "Upstream flow(s) this flow is dependant on",
+      "doc" : "Upstream entities this flow is dependant on",
       "optional" : true,
       "Relationship" : {
         "/*/destinationUrn" : {
           "createdActor" : "inputEdges/*/created/actor",
           "createdOn" : "inputEdges/*/created/time",
-          "entityTypes" : [ "dataFlow" ],
+          "entityTypes" : [ "container", "dataFlow" ],
           "isLineage" : true,
           "name" : "DownstreamOf",
           "properties" : "inputEdges/*/properties",
@@ -2138,6 +2138,26 @@
         "enableAutocomplete" : true,
         "fieldNameAliases" : [ "_entityName" ],
         "fieldType" : "WORD_GRAM"
+      }
+    }, {
+      "name" : "inputEdges",
+      "type" : {
+        "type" : "array",
+        "items" : "com.linkedin.common.Edge"
+      },
+      "doc" : "Upstream entities this flow is dependant on",
+      "optional" : true,
+      "Relationship" : {
+        "/*/destinationUrn" : {
+          "createdActor" : "inputEdges/*/created/actor",
+          "createdOn" : "inputEdges/*/created/time",
+          "entityTypes" : [ "container", "dataFlow", "dataJob", "dataset" ],
+          "isLineage" : true,
+          "name" : "DownstreamOf",
+          "properties" : "inputEdges/*/properties",
+          "updatedActor" : "inputEdges/*/lastModified/actor",
+          "updatedOn" : "inputEdges/*/lastModified/time"
+        }
       }
     }, {
       "name" : "qualifiedName",
