@@ -126,27 +126,23 @@ mutation updateDataFlow($urn: String!, $input: DataFlowUpdateInput!) {
     }
 }
 
-# fragment dataFlowAssertionsQuery on DataFlow {
-#     assertions(start: 0, count: 1000) {
-#         start
-#         count
-#         total
-#         assertions {
-#             ...assertionDetails
-#             runEvents(status: COMPLETE, limit: 1) {
-#                 total
-#                 failed
-#                 succeeded
-#                 runEvents {
-#                     ...assertionRunEventDetails
-#                 }
-#             }
-#         }
-#     }
-# }
-
-# query getDataFlowAssertions($urn: String!) {
-#     dataFlow(urn: $urn) {
-#         ...dataFlowAssertionsQuery
-#     }
-# }
+query getDataFlowAssertions($urn: String!) {
+    dataFlow(urn: $urn) {
+        assertions(start: 0, count: 1000) {
+            start
+            count
+            total
+            assertions {
+                ...assertionDetails
+                runEvents(status: COMPLETE, limit: 1) {
+                    total
+                    failed
+                    succeeded
+                    runEvents {
+                        ...assertionRunEventDetails
+                    }
+                }
+            }
+        }
+    }
+}

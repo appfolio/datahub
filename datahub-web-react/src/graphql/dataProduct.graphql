@@ -4,6 +4,27 @@ query getDataProduct($urn: String!) {
     }
 }
 
+query getDataProductAssertions($urn: String!) {
+    dataProduct(urn: $urn) {
+        assertions(start: 0, count: 1000) {
+            start
+            count
+            total
+            assertions {
+                ...assertionDetails
+                runEvents(status: COMPLETE, limit: 1) {
+                    total
+                    failed
+                    succeeded
+                    runEvents {
+                        ...assertionRunEventDetails
+                    }
+                }
+            }
+        }
+    }
+}
+
 fragment dataProductFields on DataProduct {
     ...dataProductSearchFields
     properties {

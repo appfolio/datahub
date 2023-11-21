@@ -6663,9 +6663,19 @@ type AssertionInfo {
     type: AssertionType!
 
     """
+    Description of the Assertion
+    """
+    description: String
+
+    """
     Dataset-specific assertion information
     """
     datasetAssertion: DatasetAssertionInfo
+
+    """
+    Generic assertion information
+    """
+    genericAssertion: GenericAssertionInfo
 }
 
 """
@@ -6716,6 +6726,16 @@ type DatasetAssertionInfo {
     Logic comprising a raw, unstructured assertion.
     """
     logic: String
+}
+
+"""
+Detailed information about a Generic Assertion
+"""
+type GenericAssertionInfo {
+    """
+    The urn of the entity that the assertion is related to
+    """
+    entityUrn: String!
 }
 
 """

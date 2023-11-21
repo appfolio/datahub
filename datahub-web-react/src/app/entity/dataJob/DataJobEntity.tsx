@@ -21,6 +21,7 @@ import { DataFlowEntity } from '../dataFlow/DataFlowEntity';
 import { capitalizeFirstLetterOnly } from '../../shared/textUtil';
 import DataProductSection from '../shared/containers/profile/sidebar/DataProduct/DataProductSection';
 import { getDataProduct } from '../shared/utils';
+import { DataJobValidationsTab } from './DataJobValidationsTab';
 
 const getDataJobPlatformName = (data?: DataJob): string => {
     return (
@@ -101,6 +102,10 @@ export class DataJobEntity implements Entity<DataJob> {
                         visible: (_, _1) => true,
                         enabled: (_, dataJob: GetDataJobQuery) => (dataJob?.dataJob?.runs?.total || 0) !== 0,
                     },
+                },
+                {
+                    name: 'Validations',
+                    component: DataJobValidationsTab,
                 },
             ]}
             sidebarSections={[
