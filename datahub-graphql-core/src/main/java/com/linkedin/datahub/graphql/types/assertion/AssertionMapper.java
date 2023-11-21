@@ -13,6 +13,7 @@ import com.linkedin.datahub.graphql.generated.AssertionStdParameters;
 import com.linkedin.datahub.graphql.generated.AssertionType;
 import com.linkedin.datahub.graphql.generated.DataPlatform;
 import com.linkedin.datahub.graphql.generated.DatasetAssertionInfo;
+import com.linkedin.datahub.graphql.generated.GenericAssertionInfo;
 import com.linkedin.datahub.graphql.generated.DatasetAssertionScope;
 import com.linkedin.datahub.graphql.generated.EntityType;
 import com.linkedin.datahub.graphql.generated.SchemaFieldRef;
@@ -61,13 +62,29 @@ public class AssertionMapper {
     final com.linkedin.datahub.graphql.generated.AssertionInfo assertionInfo =
         new com.linkedin.datahub.graphql.generated.AssertionInfo();
     assertionInfo.setType(AssertionType.valueOf(gmsAssertionInfo.getType().name()));
+    if (gmsAssertionInfo.hasDescription()) {
+      assertionInfo.setDescription(gmsAssertionInfo.getDescription());
+    }
     if (gmsAssertionInfo.hasDatasetAssertion()) {
       DatasetAssertionInfo datasetAssertion =
           mapDatasetAssertionInfo(gmsAssertionInfo.getDatasetAssertion());
       assertionInfo.setDatasetAssertion(datasetAssertion);
     }
+    if (gmsAssertionInfo.hasGenericAssertion()) {
+      GenericAssertionInfo genericAssertion = mapGenericAssertionInfo(gmsAssertionInfo.getGenericAssertion());
+      assertionInfo.setGenericAssertion(genericAssertion);
+    }
     assertionInfo.setDescription(gmsAssertionInfo.getDescription());
     return assertionInfo;
+  }
+
+  private static GenericAssertionInfo mapGenericAssertionInfo(
+      final com.linkedin.assertion.GenericAssertionInfo gmsGenericAssertion) {
+    GenericAssertionInfo genericAssertion = new GenericAssertionInfo();
+    genericAssertion.setEntityUrn(
+        gmsGenericAssertion.getEntityUrn().toString());
+
+    return genericAssertion;
   }
 
   private static DatasetAssertionInfo mapDatasetAssertionInfo(

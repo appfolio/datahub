@@ -18,6 +18,7 @@ import { EntityMenuItems } from '../shared/EntityDropdown/EntityDropdown';
 import { capitalizeFirstLetterOnly } from '../../shared/textUtil';
 import DataProductSection from '../shared/containers/profile/sidebar/DataProduct/DataProductSection';
 import { getDataProduct } from '../shared/utils';
+import { DataFlowValidationsTab } from './DataFlowValidationsTab';
 import { IncidentTab } from '../shared/tabs/Incident/IncidentTab';
 
 /**
@@ -81,6 +82,10 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 {
                     name: 'Tasks',
                     component: DataFlowJobsTab,
+                },
+                {
+                    name: 'Validations',
+                    component: DataFlowValidationsTab,
                 },
                 {
                     name: 'Incidents',

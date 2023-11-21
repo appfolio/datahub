@@ -33,3 +33,24 @@ query getDataJobRuns($urn: String!, $start: Int!, $count: Int!) {
         }
     }
 }
+
+query getDataJobAssertions($urn: String!) {
+    dataJob(urn: $urn) {
+        assertions(start: 0, count: 1000) {
+            start
+            count
+            total
+            assertions {
+                ...assertionDetails
+                runEvents(status: COMPLETE, limit: 1) {
+                    total
+                    failed
+                    succeeded
+                    runEvents {
+                        ...assertionRunEventDetails
+                    }
+                }
+            }
+        }
+    }
+}

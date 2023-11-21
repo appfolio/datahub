@@ -17,6 +17,7 @@ import { capitalizeFirstLetterOnly } from '../../shared/textUtil';
 import DataProductSection from '../shared/containers/profile/sidebar/DataProduct/DataProductSection';
 import { getDataProduct } from '../shared/utils';
 import EmbeddedProfile from '../shared/embed/EmbeddedProfile';
+import { ContainerValidationsTab } from './ContainerValidationsTab';
 
 /**
  * Definition of the DataHub Container entity.
@@ -85,6 +86,10 @@ export class ContainerEntity implements Entity<Container> {
                 {
                     name: 'Properties',
                     component: PropertiesTab,
+                },
+                {
+                    name: 'Validations',
+                    component: ContainerValidationsTab,
                 },
             ]}
             sidebarSections={this.getSidebarSections()}
