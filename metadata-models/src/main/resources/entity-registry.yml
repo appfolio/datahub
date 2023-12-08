@@ -70,6 +70,7 @@ entities:
       - institutionalMemory
       - dataPlatformInstance
       - browsePathsV2
+      - container
       - structuredProperties
       - forms
       - subTypes
@@ -91,6 +92,7 @@ entities:
       - institutionalMemory
       - dataPlatformInstance
       - browsePathsV2
+      - container
       - structuredProperties
       - incidentsSummary
       - forms
