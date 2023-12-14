@@ -2341,7 +2341,7 @@ enum FabricType {
 """
 A container of other Metadata Entities
 """
-type Container implements Entity {
+type Container implements EntityWithRelationships & Entity {
     """
     The primary key of the container
     """
@@ -2431,6 +2431,21 @@ type Container implements Entity {
     Edges extending from this entity
     """
     relationships(input: RelationshipsInput!): EntityRelationshipsResult
+
+    """
+    Edges extending from this entity grouped by direction in the lineage graph
+    """
+    lineage(input: LineageInput!): EntityLineageResult
+
+    """
+    Assertions associated with the DataJob
+    """
+    assertions(start: Int, count: Int): EntityAssertionsResult
+
+    """
+    Experimental! The resolved health statuses of the Container
+    """
+    health: [Health!]
 
     """
     Status metadata of the container
@@ -5575,6 +5590,16 @@ type DataFlow implements EntityWithRelationships & Entity & BrowsableEntity {
     lineage(input: LineageInput!): EntityLineageResult
 
     """
+    Assertions associated with the DataFlow
+    """
+    assertions(start: Int, count: Int): EntityAssertionsResult
+
+    """
+    Experimental! The resolved health statuses of the DataFlow
+    """
+    health: [Health!]
+
+    """
     The browse paths corresponding to the data flow. If no Browse Paths have been generated before, this will be null.
     """
     browsePaths: [BrowsePath!]
@@ -5764,6 +5789,16 @@ type DataJob implements EntityWithRelationships & Entity & BrowsableEntity {
     Edges extending from this entity grouped by direction in the lineage graph
     """
     lineage(input: LineageInput!): EntityLineageResult
+
+    """
+    Assertions associated with the DataJob
+    """
+    assertions(start: Int, count: Int): EntityAssertionsResult
+
+    """
+    Experimental! The resolved health statuses of the DataJob
+    """
+    health: [Health!]
 
     """
     The browse paths corresponding to the data job. If no Browse Paths have been generated before, this will be null.
@@ -6628,9 +6663,19 @@ type AssertionInfo {
     type: AssertionType!
 
     """
+    Description of the Assertion
+    """
+    description: String
+
+    """
     Dataset-specific assertion information
     """
     datasetAssertion: DatasetAssertionInfo
+
+    """
+    Generic assertion information
+    """
+    genericAssertion: GenericAssertionInfo
 }
 
 """
@@ -6681,6 +6726,16 @@ type DatasetAssertionInfo {
     Logic comprising a raw, unstructured assertion.
     """
     logic: String
+}
+
+"""
+Detailed information about a Generic Assertion
+"""
+type GenericAssertionInfo {
+    """
+    The urn of the entity that the assertion is related to
+    """
+    entityUrn: String!
 }
 
 """
@@ -7069,6 +7124,7 @@ The top-level assertion type. Currently single Dataset assertions are the only t
 """
 enum AssertionType {
     DATASET
+    GENERIC
 }
 
 """
@@ -10964,6 +11020,16 @@ type DataProduct implements Entity {
     Children entities inside of the DataProduct
     """
     entities(input: SearchAcrossEntitiesInput): SearchResults
+
+    """
+    Assertions associated with the Data Porduct
+    """
+    assertions(start: Int, count: Int): EntityAssertionsResult
+
+    """
+    Experimental! The resolved health statuses of the Data Product
+    """
+    health: [Health!]
 
     """
     The structured glossary terms associated with the Data Product

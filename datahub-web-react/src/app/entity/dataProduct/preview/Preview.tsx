@@ -1,5 +1,5 @@
 import React from 'react';
-import { EntityType, Owner, GlobalTags, GlossaryTerms, Domain, EntityPath } from '../../../../types.generated';
+import { EntityType, Owner, GlobalTags, GlossaryTerms, Domain, EntityPath, Health } from '../../../../types.generated';
 import DefaultPreviewCard from '../../../preview/DefaultPreviewCard';
 import { useEntityRegistry } from '../../../useEntityRegistry';
 import { IconStyleType } from '../../Entity';
@@ -16,6 +16,7 @@ interface Props {
     externalUrl?: string | null;
     degree?: number;
     paths?: EntityPath[];
+    health?: Health[] | null;
 }
 
 export const Preview = ({
@@ -30,6 +31,7 @@ export const Preview = ({
     externalUrl,
     degree,
     paths,
+    health,
 }: Props): JSX.Element => {
     const entityRegistry = useEntityRegistry();
 
@@ -51,6 +53,7 @@ export const Preview = ({
             displayAssetCount
             degree={degree}
             paths={paths}
+            health={health || undefined}
         />
     );
 };

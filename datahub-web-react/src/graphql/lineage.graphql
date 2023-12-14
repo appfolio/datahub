@@ -1,6 +1,29 @@
 fragment lineageNodeProperties on EntityWithRelationships {
     urn
     type
+    ... on Container {
+        urn
+        type
+        properties {
+            name
+            description
+        }
+        platform {
+            ...platformFields
+        }
+        ownership {
+            ...ownershipFields
+        }
+        status {
+            removed
+        }
+        health {
+            type
+            status
+            message
+            causes
+        }
+    }
     ... on DataJob {
         urn
         type
@@ -54,6 +77,12 @@ fragment lineageNodeProperties on EntityWithRelationships {
                 }
             }
         }
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
     ... on DataFlow {
         orchestrator
@@ -85,6 +114,12 @@ fragment lineageNodeProperties on EntityWithRelationships {
         ...entityDataProduct
         status {
             removed
+        }
+        health {
+            type
+            status
+            message
+            causes
         }
     }
     ... on Dashboard {

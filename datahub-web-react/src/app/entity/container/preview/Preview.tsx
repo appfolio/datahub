@@ -14,6 +14,7 @@ import {
     GlossaryTerms,
     DataProduct,
     EntityPath,
+    Health,
 } from '../../../../types.generated';
 import DefaultPreviewCard from '../../../preview/DefaultPreviewCard';
 import { capitalizeFirstLetterOnly } from '../../../shared/textUtil';
@@ -47,6 +48,7 @@ export const Preview = ({
     deprecation,
     degree,
     paths,
+    health,
 }: {
     urn: string;
     name: string;
@@ -69,6 +71,7 @@ export const Preview = ({
     externalUrl?: string | null;
     degree?: number;
     paths?: EntityPath[];
+    health?: Health[] | null;
 }): JSX.Element => {
     const entityRegistry = useEntityRegistry();
     const typeName = capitalizeFirstLetterOnly(subTypes?.typeNames?.[0]) || 'Container';
@@ -104,6 +107,7 @@ export const Preview = ({
             }
             degree={degree}
             paths={paths}
+            health={health || undefined}
         />
     );
 };

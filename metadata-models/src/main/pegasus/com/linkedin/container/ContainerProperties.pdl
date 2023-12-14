@@ -3,6 +3,7 @@ namespace com.linkedin.container
 import com.linkedin.common.CustomProperties
 import com.linkedin.common.ExternalReference
 import com.linkedin.common.TimeStamp
+import com.linkedin.common.Edge
 
 /**
  * Information about a Asset Container as received from a 3rd party source system
@@ -40,6 +41,23 @@ record ContainerProperties includes CustomProperties, ExternalReference {
     "hasValuesFieldName": "hasDescription"
   }
   description: optional string
+
+  /**
+   * Upstream entities this container is dependant on
+   */
+  @Relationship = {
+    "/*/destinationUrn": {
+      "name": "DownstreamOf",
+      "entityTypes": [ "container", "dataFlow", "dataJob", "dataset" ],
+      "isLineage": true,
+      "createdOn": "inputEdges/*/created/time"
+      "createdActor": "inputEdges/*/created/actor"
+      "updatedOn": "inputEdges/*/lastModified/time"
+      "updatedActor": "inputEdges/*/lastModified/actor"
+      "properties": "inputEdges/*/properties"
+    }
+  }
+  inputEdges: optional array[Edge]
 
   /**
    * A timestamp documenting when the asset was created in the source Data Platform (not on DataHub)

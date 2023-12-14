@@ -386,6 +386,15 @@ fragment dataJobFields on DataJob {
     browsePathV2 {
         ...browsePathV2Fields
     }
+    health {
+        type
+        status
+        message
+        causes
+    }
+    assertions(start: 0, count: 1) {
+        total
+    }
 }
 
 fragment dashboardFields on Dashboard {

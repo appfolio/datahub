@@ -21,6 +21,7 @@ import { DataFlowEntity } from '../dataFlow/DataFlowEntity';
 import { capitalizeFirstLetterOnly } from '../../shared/textUtil';
 import DataProductSection from '../shared/containers/profile/sidebar/DataProduct/DataProductSection';
 import { getDataProduct } from '../shared/utils';
+import { DataJobValidationsTab } from './DataJobValidationsTab';
 
 const getDataJobPlatformName = (data?: DataJob): string => {
     return (
@@ -102,6 +103,10 @@ export class DataJobEntity implements Entity<DataJob> {
                         enabled: (_, dataJob: GetDataJobQuery) => (dataJob?.dataJob?.runs?.total || 0) !== 0,
                     },
                 },
+                {
+                    name: 'Validations',
+                    component: DataJobValidationsTab,
+                },
             ]}
             sidebarSections={[
                 {
@@ -155,6 +160,7 @@ export class DataJobEntity implements Entity<DataJob> {
                 domain={data.domain?.domain}
                 dataProduct={getDataProduct(genericProperties?.dataProduct)}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -182,6 +188,7 @@ export class DataJobEntity implements Entity<DataJob> {
                 }
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
     };
@@ -212,6 +219,7 @@ export class DataJobEntity implements Entity<DataJob> {
             type: EntityType.DataJob,
             icon: entity?.dataFlow?.platform?.properties?.logoUrl || undefined,
             platform: entity?.dataFlow?.platform,
+            health: entity?.health || undefined,
         };
     };
 

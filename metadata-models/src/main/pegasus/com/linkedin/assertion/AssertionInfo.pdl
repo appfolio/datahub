@@ -43,6 +43,9 @@ record AssertionInfo includes CustomProperties, ExternalReference {
        * Would have named this SCHEMA but the codegen for PDL does not allow this (reserved word).
        */
       DATA_SCHEMA
+
+      // A single-dataflow assertion. When this is the value, the dataflowAssertion field will be populated.
+      GENERIC
     }
 
     /**
@@ -82,4 +85,9 @@ record AssertionInfo includes CustomProperties, ExternalReference {
     * An optional human-readable description of the assertion
     */
     description: optional string
+
+    /**
+    * Assertion information when type is GENERIC
+    */
+    genericAssertion: optional GenericAssertionInfo
 }

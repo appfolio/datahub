@@ -17,6 +17,7 @@ import { DataProductEntitiesTab } from './DataProductEntitiesTab';
 import { EntityActionItem } from '../shared/entity/EntityActions';
 import { EntityMenuItems } from '../shared/EntityDropdown/EntityDropdown';
 import { PropertiesTab } from '../shared/tabs/Properties/PropertiesTab';
+import { DataProductValidationsTab } from './DataProductValidationsTab';
 
 /**
  * Definition of the DataHub Data Product entity.
@@ -51,7 +52,7 @@ export class DataProductEntity implements Entity<DataProduct> {
 
     isSearchEnabled = () => true;
 
-    isBrowseEnabled = () => true;
+    isBrowseEnabled = () => false;
 
     isLineageEnabled = () => false;
 
@@ -85,6 +86,10 @@ export class DataProductEntity implements Entity<DataProduct> {
                 {
                     name: 'Properties',
                     component: PropertiesTab,
+                },
+                {
+                    name: 'Validations',
+                    component: DataProductValidationsTab,
                 },
             ]}
             sidebarSections={[
@@ -134,6 +139,7 @@ export class DataProductEntity implements Entity<DataProduct> {
                 domain={data.domain?.domain}
                 entityCount={data?.entities?.total || undefined}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -153,6 +159,7 @@ export class DataProductEntity implements Entity<DataProduct> {
                 externalUrl={data.properties?.externalUrl}
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
     };

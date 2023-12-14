@@ -67,6 +67,7 @@ entities:
       - institutionalMemory
       - dataPlatformInstance
       - browsePathsV2
+      - container
   - name: dataFlow
     category: core
     keyAspect: dataFlowKey
@@ -84,6 +85,7 @@ entities:
       - institutionalMemory
       - dataPlatformInstance
       - browsePathsV2
+      - container
   - name: dataProcess
     keyAspect: dataProcessKey
     aspects:

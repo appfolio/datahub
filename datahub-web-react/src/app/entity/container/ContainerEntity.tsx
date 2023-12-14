@@ -17,6 +17,7 @@ import { capitalizeFirstLetterOnly } from '../../shared/textUtil';
 import DataProductSection from '../shared/containers/profile/sidebar/DataProduct/DataProductSection';
 import { getDataProduct } from '../shared/utils';
 import EmbeddedProfile from '../shared/embed/EmbeddedProfile';
+import { ContainerValidationsTab } from './ContainerValidationsTab';
 
 /**
  * Definition of the DataHub Container entity.
@@ -53,7 +54,7 @@ export class ContainerEntity implements Entity<Container> {
 
     isBrowseEnabled = () => false;
 
-    isLineageEnabled = () => false;
+    isLineageEnabled = () => true;
 
     getAutoCompleteFieldName = () => 'name';
 
@@ -66,6 +67,7 @@ export class ContainerEntity implements Entity<Container> {
     renderProfile = (urn: string) => (
         <EntityProfile
             urn={urn}
+            key={urn}
             entityType={EntityType.Container}
             useEntityQuery={useGetContainerQuery}
             useUpdateQuery={undefined}
@@ -82,6 +84,10 @@ export class ContainerEntity implements Entity<Container> {
                 {
                     name: 'Properties',
                     component: PropertiesTab,
+                },
+                {
+                    name: 'Validations',
+                    component: ContainerValidationsTab,
                 },
             ]}
             sidebarSections={[
@@ -129,6 +135,7 @@ export class ContainerEntity implements Entity<Container> {
                 dataProduct={getDataProduct(genericProperties?.dataProduct)}
                 tags={data.tags}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -156,8 +163,21 @@ export class ContainerEntity implements Entity<Container> {
                 glossaryTerms={data.glossaryTerms}
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
+    };
+
+    getLineageVizConfig = (entity: Container) => {
+        return {
+            urn: entity?.urn,
+            name: this.displayName(entity),
+            expandedName: entity?.properties?.name,
+            type: EntityType.Container,
+            icon: entity?.platform?.properties?.logoUrl || undefined,
+            platform: entity?.platform,
+            health: entity?.health || undefined,
+        };
     };
 
     displayName = (data: Container) => {

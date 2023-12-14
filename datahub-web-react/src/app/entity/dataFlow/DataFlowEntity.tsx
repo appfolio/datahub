@@ -18,6 +18,7 @@ import { EntityMenuItems } from '../shared/EntityDropdown/EntityDropdown';
 import { capitalizeFirstLetterOnly } from '../../shared/textUtil';
 import DataProductSection from '../shared/containers/profile/sidebar/DataProduct/DataProductSection';
 import { getDataProduct } from '../shared/utils';
+import { DataFlowValidationsTab } from './DataFlowValidationsTab';
 
 /**
  * Definition of the DataHub DataFlow entity.
@@ -48,7 +49,7 @@ export class DataFlowEntity implements Entity<DataFlow> {
 
     isBrowseEnabled = () => true;
 
-    isLineageEnabled = () => false;
+    isLineageEnabled = () => true;
 
     getAutoCompleteFieldName = () => 'name';
 
@@ -78,6 +79,10 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 {
                     name: 'Tasks',
                     component: DataFlowJobsTab,
+                },
+                {
+                    name: 'Validations',
+                    component: DataFlowValidationsTab,
                 },
             ]}
             sidebarSections={[
@@ -133,6 +138,7 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 domain={data.domain?.domain}
                 dataProduct={getDataProduct(genericProperties?.dataProduct)}
                 externalUrl={data.properties?.externalUrl}
+                health={data.health}
             />
         );
     };
@@ -160,8 +166,21 @@ export class DataFlowEntity implements Entity<DataFlow> {
                 deprecation={data.deprecation}
                 degree={(result as any).degree}
                 paths={(result as any).paths}
+                health={data.health}
             />
         );
+    };
+
+    getLineageVizConfig = (entity: DataFlow) => {
+        return {
+            urn: entity?.urn,
+            name: this.displayName(entity),
+            expandedName: entity?.flowId,
+            type: EntityType.DataFlow,
+            icon: entity?.platform?.properties?.logoUrl || undefined,
+            platform: entity?.platform,
+            health: entity?.health || undefined,
+        };
     };
 
     displayName = (data: DataFlow) => {

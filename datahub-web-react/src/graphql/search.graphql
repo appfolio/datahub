@@ -594,6 +594,12 @@ fragment searchResultFields on Entity {
         childJobs: relationships(input: { types: ["IsPartOf"], direction: INCOMING, start: 0, count: 100 }) {
             total
         }
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
     ... on DataJob {
         dataFlow {
@@ -639,6 +645,12 @@ fragment searchResultFields on Entity {
                     actor
                 }
             }
+        }
+        health {
+            type
+            status
+            message
+            causes
         }
     }
     ... on GlossaryTerm {
@@ -721,6 +733,12 @@ fragment searchResultFields on Entity {
         parentContainers {
             ...parentContainersFields
         }
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
     ... on MLFeatureTable {
         name
@@ -800,6 +818,12 @@ fragment searchResultFields on Entity {
     }
     ... on DataProduct {
         ...dataProductSearchFields
+        health {
+            type
+            status
+            message
+            causes
+        }
     }
 }
 

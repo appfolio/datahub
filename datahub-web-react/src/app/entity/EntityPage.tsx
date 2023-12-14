@@ -55,6 +55,7 @@ export const EntityPage = ({ entityType }: Props) => {
 
     const canViewEntityPage = privileges.find((privilege) => privilege === VIEW_ENTITY_PAGE);
     const showNewPage =
+        entityType === EntityType.Container ||
         entityType === EntityType.Dataset ||
         entityType === EntityType.Dashboard ||
         entityType === EntityType.Chart ||
